@@ -32,6 +32,7 @@ const Post = ({ title, author, path, date, body, tags, fluid }) => {
             color="primary"
             className="ml-2 p-2 text-lowercase"
             style={{ fontSize: 16 }}
+            key={tag}
           >
             <Link to={`/tag/${sluggify(tag)}`} className="text-white">
               {tag}

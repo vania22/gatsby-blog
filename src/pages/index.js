@@ -5,6 +5,7 @@ import { Row, Col } from "reactstrap"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Post from "../components/Post"
+import Sidebar from "../components/Sidebar"
 
 const IndexPage = () => (
   <Layout>
@@ -39,9 +40,10 @@ const IndexPage = () => (
           style={{
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.4)",
           }}
-        ></div>
+        >
+          <Sidebar />
+        </div>
       </Col>
     </Row>
   </Layout>
@@ -61,8 +63,9 @@ const indexQuery = graphql`
             tags
             image {
               childImageSharp {
-                fluid(maxWidth: 600) {
+                fluid(maxWidth: 968, quality: 100) {
                   ...GatsbyImageSharpFluid
+                  ...GatsbyImageSharpFluidLimitPresentationSize
                 }
               }
             }
