@@ -1,4 +1,4 @@
-export const sluggify = function (text) {
+exports.sluggify = function (text) {
   return text
     .toString()
     .toLowerCase()

@@ -11,7 +11,22 @@ import {
   Input,
 } from "reactstrap"
 
-const Sidebar = () => {
+const Sidebar = ({ postAuthor, authorImage }) => {
+  if (postAuthor) {
+    return (
+      <div>
+        <Card>
+          <Img className="card-image-top" fluid={authorImage} />
+          <CardBody>
+            <CardTitle className="text-center text-uppercase mt-3">
+              {postAuthor.name}
+            </CardTitle>
+          </CardBody>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Card>
@@ -49,23 +64,23 @@ const Sidebar = () => {
           <StaticQuery
             query={sidebarQuery}
             render={data => (
-              <div key={1}>
+              <>
                 {data.allMarkdownRemark.edges.map(({ node }) => (
                   <Card key={node.id}>
-                    <Link to={node.frontmatter.path}>
+                    <Link to={`/post/${node.fields.slug}`} replace={true}>
                       <Img
                         className="card-image-top"
                         fluid={node.frontmatter.image.childImageSharp.fluid}
                       />
                     </Link>
                     <CardBody>
-                      <Link to={node.frontmatter.path}>
+                      <Link to={`/post/${node.fields.slug}`} replace={true}>
                         <CardTitle>{node.frontmatter.title}</CardTitle>
                       </Link>
                     </CardBody>
                   </Card>
                 ))}
-              </div>
+              </>
             )}
           />
         </CardBody>
@@ -83,9 +98,11 @@ const sidebarQuery = graphql`
       edges {
         node {
           id
+          fields {
+            slug
+          }
           frontmatter {
             title
-            path
             image {
               childImageSharp {
                 fluid(maxWidth: 496, quality: 100) {
