@@ -7,10 +7,11 @@ import {
   CardText,
   CardSubtitle,
   CardBody,
-  CardImg,
+  Badge,
 } from "reactstrap"
+import { sluggify } from "../utils/sluggify"
 
-const Post = ({ title, author, path, date, body, fluid }) => {
+const Post = ({ title, author, path, date, body, tags, fluid }) => {
   return (
     <Card>
       <Link to={path}>
@@ -26,6 +27,17 @@ const Post = ({ title, author, path, date, body, fluid }) => {
           <span className="text-info ml-2">{author}</span>
         </CardSubtitle>
         <CardText>{body}</CardText>
+        {tags.map(tag => (
+          <Badge
+            color="primary"
+            className="ml-2 p-2 text-lowercase"
+            style={{ fontSize: 16 }}
+          >
+            <Link to={`/tag/${sluggify(tag)}`} className="text-white">
+              {tag}
+            </Link>
+          </Badge>
+        ))}
         <Link to={path} className="btn btn-outline-primary float-right">
           Read more
         </Link>
