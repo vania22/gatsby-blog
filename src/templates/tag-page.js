@@ -6,16 +6,14 @@ import SEO from "../components/seo"
 import Post from "../components/Post"
 import Sidebar from "../components/Sidebar"
 
-const tagPage = ({ pageContext: { posts } }) => {
-  console.log(posts)
-
+const tagPage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Home" />
       <h1>Hi people</h1>
       <Row>
         <Col md="8">
-          {posts.map(({ node }) => (
+          {data.allMarkdownRemark.edges.map(({ node }) => (
             <Post
               title={node.frontmatter.title}
               author={node.frontmatter.author}
@@ -37,3 +35,36 @@ const tagPage = ({ pageContext: { posts } }) => {
 }
 
 export default tagPage
+
+export const postQuery = graphql`
+  query postsByTag($tag: String!) {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { tags: { in: [$tag] } } }
+    ) {
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "MMM Do YYYY")
+            author
+            tags
+            image {
+              childImageSharp {
+                fluid(maxWidth: 968, quality: 100) {
+                  ...GatsbyImageSharpFluid
+                  ...GatsbyImageSharpFluidLimitPresentationSize
+                }
+              }
+            }
+          }
+          fields {
+            slug
+          }
+          excerpt
+        }
+      }
+    }
+  }
+`

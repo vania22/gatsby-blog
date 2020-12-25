@@ -1,11 +1,10 @@
 import React from "react"
-import { Link } from "gatsby"
-import { Col, Row, Badge } from "reactstrap"
+import { Col, Row } from "reactstrap"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Sidebar from "../components/Sidebar"
-import { sluggify } from "../utils/sluggify"
+import Tag from "../components/Tag"
 
 const tagsPage = ({ pageContext: { tags } }) => {
   return (
@@ -15,17 +14,7 @@ const tagsPage = ({ pageContext: { tags } }) => {
         <Col md="8">
           <ul>
             {Object.keys(tags).map(key => (
-              <Badge
-                color="primary"
-                className="p-2 ml-2 text-lowercase"
-                style={{ fontSize: 16 }}
-                key={key + tags[key]}
-              >
-                <Link to={`/tag/${sluggify(key)}`} className="text-white">
-                  {key}
-                  <small className="ml-1">{tags[key]}</small>
-                </Link>
-              </Badge>
+              <Tag tag={key} tagCount={tags[key]} key={key} />
             ))}
           </ul>
         </Col>

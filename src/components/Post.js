@@ -1,15 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import {
-  Card,
-  CardTitle,
-  CardText,
-  CardSubtitle,
-  CardBody,
-  Badge,
-} from "reactstrap"
-import { sluggify } from "../utils/sluggify"
+import { Card, CardTitle, CardText, CardSubtitle, CardBody } from "reactstrap"
+import Tag from "../components/Tag"
 
 const Post = ({ title, author, slug, date, body, tags, fluid }) => {
   return (
@@ -22,26 +15,17 @@ const Post = ({ title, author, slug, date, body, tags, fluid }) => {
           <Link to={`/post/${slug}`}>{title}</Link>
         </CardTitle>
         <CardSubtitle>
-          <span className="text-info mr-2">{date}</span>
+          <span className="mr-2 text-info">{date}</span>
           by
-          <span className="text-info ml-2">{author}</span>
+          <span className="ml-2 text-info">{author}</span>
         </CardSubtitle>
         <CardText>{body}</CardText>
         {tags.map(tag => (
-          <Badge
-            color="primary"
-            className="ml-2 p-2 text-lowercase"
-            style={{ fontSize: 16 }}
-            key={tag}
-          >
-            <Link to={`/tag/${sluggify(tag)}`} className="text-white">
-              {tag}
-            </Link>
-          </Badge>
+          <Tag tag={tag} key={tag} />
         ))}
         <Link
           to={`/post/${slug}`}
-          className="btn btn-outline-primary float-right"
+          className="float-right btn btn-outline-primary"
         >
           Read more
         </Link>

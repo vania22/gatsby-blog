@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import {
   Row,
@@ -7,7 +7,6 @@ import {
   Card,
   CardSubtitle,
   CardBody,
-  Badge,
   CardText,
 } from "reactstrap"
 import {
@@ -20,8 +19,9 @@ import { DiscussionEmbed } from "disqus-react"
 import Layout from "../components/layout"
 import Sidebar from "../components/Sidebar"
 import SEO from "../components/seo"
-import { sluggify } from "../utils/sluggify"
+
 import { authors } from "../templates/authors"
+import Tag from "../components/Tag"
 
 const SinglePostPage = ({ data, pageContext }) => {
   const post = data.markdownRemark.frontmatter
@@ -58,16 +58,7 @@ const SinglePostPage = ({ data, pageContext }) => {
                 }}
               />
               {post.tags.map(tag => (
-                <Badge
-                  color="primary"
-                  className="p-2 ml-2 text-lowercase"
-                  style={{ fontSize: 16 }}
-                  key={tag}
-                >
-                  <Link to={`/tag/${sluggify(tag)}`} className="text-white">
-                    {tag}
-                  </Link>
-                </Badge>
+                <Tag tag={tag} key={tag}/>
               ))}
             </CardBody>
           </Card>
@@ -119,7 +110,7 @@ const SinglePostPage = ({ data, pageContext }) => {
 export default SinglePostPage
 
 export const postQuery = graphql`
-  query blogPostBySlug($slug: String!, $authorImageUrl: String!) {
+  query postBySlug($slug: String!, $authorImageUrl: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       html

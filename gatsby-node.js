@@ -86,15 +86,10 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Creating /tag/:slug pages
     tags.forEach(tag => {
-      const postsByTag = posts.filter(({ node }) => {
-        console.log(node.frontmatter)
-        return node.frontmatter.tags.includes(tag) === true
-      })
-
       createPage({
         path: `/tag/${sluggify(tag)}`,
         component: templates.tagPage,
-        context: { posts: postsByTag },
+        context: { tag },
       })
     })
   })
