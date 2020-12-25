@@ -38,6 +38,7 @@ const SinglePostPage = ({ data, pageContext }) => {
   return (
     <Layout>
       <SEO title={post.title} />
+      <h1>{post.title}</h1>
       <Row>
         <Col md="8">
           <Card>
@@ -58,7 +59,7 @@ const SinglePostPage = ({ data, pageContext }) => {
                 }}
               />
               {post.tags.map(tag => (
-                <Tag tag={tag} key={tag}/>
+                <Tag tag={tag} key={tag} />
               ))}
             </CardBody>
           </Card>

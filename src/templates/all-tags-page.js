@@ -10,6 +10,7 @@ const tagsPage = ({ pageContext: { tags } }) => {
   return (
     <Layout>
       <SEO title="All Tags" />
+      <h1>All Tags</h1>
       <Row>
         <Col md="8">
           <ul>

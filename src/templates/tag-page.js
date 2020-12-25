@@ -6,11 +6,13 @@ import SEO from "../components/seo"
 import Post from "../components/Post"
 import Sidebar from "../components/Sidebar"
 
-const tagPage = ({ data }) => {
+const tagPage = ({ data, pageContext }) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Hi people</h1>
+      <h1>
+        Posts tagged with <em>{pageContext.tag}</em>
+      </h1>
       <Row>
         <Col md="8">
           {data.allMarkdownRemark.edges.map(({ node }) => (

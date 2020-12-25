@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 import Post from "../components/Post"
 import Sidebar from "../components/Sidebar"
 
-const IndexPage = () => (
+const postLists = () => (
   <Layout>
     <SEO title="Home" />
     <h1>Recent Posts</h1>
@@ -49,7 +49,7 @@ const IndexPage = () => (
   </Layout>
 )
 
-const indexQuery = graphql`
+const postListQuery = graphql`
   query {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
@@ -79,4 +79,4 @@ const indexQuery = graphql`
   }
 `
 
-export default IndexPage
+export default postLists
