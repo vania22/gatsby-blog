@@ -6,7 +6,6 @@ exports.authors = [
     facebook: "https://facebook.com",
     twiiter: "https://twitter.com",
     instagram: "https://instagram.com",
-    google: "https://google.com",
   },
   {
     name: "Valentyna Vasiuryna",
@@ -15,6 +14,5 @@ exports.authors = [
     facebook: "https://facebook.com",
     twiiter: "https://twitter.com",
     instagram: "https://instagram.com",
-    google: "https://google.com",
   },
 ]

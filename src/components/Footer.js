@@ -34,11 +34,6 @@ const Footer = () => {
             </a>
           </li>
           <li>
-            <a href="https://google.com" target="_blank" className="google">
-              <FaGoogle size={33} />
-            </a>
-          </li>
-          <li>
             <a href="https://linkedin.com" target="_blank" className="linkedin">
               <FaLinkedinIn size={33} />
             </a>

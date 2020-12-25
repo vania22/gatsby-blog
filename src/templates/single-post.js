@@ -10,6 +10,12 @@ import {
   Badge,
   CardText,
 } from "reactstrap"
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa"
+import { DiscussionEmbed } from "disqus-react"
 
 import Layout from "../components/layout"
 import Sidebar from "../components/Sidebar"
@@ -17,9 +23,17 @@ import SEO from "../components/seo"
 import { sluggify } from "../utils/sluggify"
 import { authors } from "../templates/authors"
 
-const SinglePostPage = ({ data }) => {
+const SinglePostPage = ({ data, pageContext }) => {
   const post = data.markdownRemark.frontmatter
   const author = authors.find(a => a.name === post.author)
+
+  const baseURL = "https://gatsbyportfolio.co.uk"
+  const disqusShortname = "gatsby-tutorial"
+  const disqusConfig = {
+    url: baseURL + pageContext.slug,
+    identifier: data.markdownRemark.id,
+    title: post.title,
+  }
 
   return (
     <Layout>
@@ -33,9 +47,9 @@ const SinglePostPage = ({ data }) => {
             />
             <CardBody>
               <CardSubtitle>
-                <span className="text-info mr-2">{post.date}</span>
+                <span className="mr-2 text-info">{post.date}</span>
                 by
-                <span className="text-info ml-2">{post.author}</span>
+                <span className="ml-2 text-info">{post.author}</span>
               </CardSubtitle>
               <CardText
                 className="mt-3"
@@ -46,7 +60,7 @@ const SinglePostPage = ({ data }) => {
               {post.tags.map(tag => (
                 <Badge
                   color="primary"
-                  className="ml-2 p-2 text-lowercase"
+                  className="p-2 ml-2 text-lowercase"
                   style={{ fontSize: 16 }}
                   key={tag}
                 >
@@ -57,6 +71,39 @@ const SinglePostPage = ({ data }) => {
               ))}
             </CardBody>
           </Card>
+          <h3 className="text-center">Share this post</h3>
+          <div className="text-center social-share-links">
+            <ul>
+              <li>
+                <a
+                  href={`https://facebook.com/sharer/sharer.php?u=${baseURL}/post/${pageContext.slug}`}
+                  className="facebook"
+                  target="_blank"
+                >
+                  <FaFacebookF size={28} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://twitter.com/share?url=${baseURL}/post/${pageContext.slug}&text=${post.title}&via=twitterHandle`}
+                  className="twitter"
+                  target="_blank"
+                >
+                  <FaTwitter size={28} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://www.linkedin.com/shareArticle?url=${baseURL}/post/${pageContext.slug}`}
+                  className="linkedin"
+                  target="_blank"
+                >
+                  <FaLinkedinIn size={28} />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
         </Col>
         <Col md="4">
           <Sidebar

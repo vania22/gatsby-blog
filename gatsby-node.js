@@ -1,6 +1,8 @@
+const path = require("path")
+const _ = require("lodash")
+
 const { sluggify } = require("./src/utils/sluggify")
 const { authors } = require("./src/templates/authors")
-const path = require("path")
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
@@ -17,7 +19,11 @@ exports.onCreateNode = ({ node, actions }) => {
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-  const singlePostTemplate = path.resolve("src/templates/single-post.js")
+  const templates = {
+    singlePost: path.resolve("src/templates/single-post.js"),
+    tagsPage: path.resolve("src/templates/all-tags-page.js"),
+    tagPage: path.resolve("src/templates/tag-page.js"),
+  }
 
   return graphql(`
     {
@@ -26,6 +32,7 @@ exports.createPages = ({ graphql, actions }) => {
           node {
             frontmatter {
               author
+              tags
             }
             fields {
               slug
@@ -43,13 +50,51 @@ exports.createPages = ({ graphql, actions }) => {
       createPage({
         path: `/post/${node.fields.slug}`,
         pathMatch: "/post/:slug",
-        component: singlePostTemplate,
+        component: templates.singlePost,
         context: {
           slug: node.fields.slug,
           // Find author image and pass it to the single post to display in the Sidebar
           authorImageUrl: authors.find(a => a.name === node.frontmatter.author)
             .imageUrl,
         },
+      })
+    })
+
+    let tags = []
+    let tagPostCount = {}
+
+    // Collect all the tags from posts and put them into tags array
+    _.each(posts, edges => {
+      if (_.get(edges, "node.frontmatter.tags")) {
+        tags = tags.concat(edges.node.frontmatter.tags)
+      }
+    })
+
+    // Calculate the count of the each tag
+    tags.forEach(tag => {
+      tagPostCount[tag] = (tagPostCount[tag] || 0) + 1
+    })
+
+    // remove duplicates from the tags array
+    tags = _.uniq(tags)
+
+    createPage({
+      path: `/tags`,
+      component: templates.tagsPage,
+      context: { tags: tagPostCount },
+    })
+
+    // Creating /tag/:slug pages
+    tags.forEach(tag => {
+      const postsByTag = posts.filter(({ node }) => {
+        console.log(node.frontmatter)
+        return node.frontmatter.tags.includes(tag) === true
+      })
+
+      createPage({
+        path: `/tag/${sluggify(tag)}`,
+        component: templates.tagPage,
+        context: { posts: postsByTag },
       })
     })
   })

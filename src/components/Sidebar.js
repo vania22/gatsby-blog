@@ -11,27 +11,17 @@ import {
   Input,
 } from "reactstrap"
 
-const Sidebar = ({ postAuthor, authorImage }) => {
-  if (postAuthor) {
-    return (
-      <div>
-        <Card>
-          <Img className="card-image-top" fluid={authorImage} />
-          <CardBody>
-            <CardTitle className="text-center text-uppercase mt-3">
-              {postAuthor.name}
-            </CardTitle>
-          </CardBody>
-        </Card>
-      </div>
-    )
-  }
+import AuthorSidebar from "./AuthorSidebar"
 
+const Sidebar = ({ postAuthor, authorImage }) => {
   return (
     <div>
+      {postAuthor && (
+        <AuthorSidebar postAuthor={postAuthor} authorImage={authorImage} />
+      )}
       <Card>
         <CardBody>
-          <CardTitle className="text-center text-uppercase mb-3">
+          <CardTitle className="mb-3 text-center text-uppercase">
             Newsletter
           </CardTitle>
           <Form className="text-center">
@@ -58,7 +48,7 @@ const Sidebar = ({ postAuthor, authorImage }) => {
       </Card>
       <Card>
         <CardBody>
-          <CardTitle className="text-center text-uppercase mb-3">
+          <CardTitle className="mb-3 text-center text-uppercase">
             Recent posts
           </CardTitle>
           <StaticQuery
