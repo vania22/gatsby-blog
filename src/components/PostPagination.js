@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, StaticQuery, Link } from "gatsby"
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap"
 
-const PostPaginationTemplate = ({ data, currentPage }) => {
+const PostPaginationComponent = ({ data, currentPage }) => {
   const prevPage = currentPage - 1
   const nextPage = currentPage + 1
   const totalPages = Array.from({
@@ -16,6 +16,7 @@ const PostPaginationTemplate = ({ data, currentPage }) => {
           <PaginationLink previous></PaginationLink>
         </PaginationItem>
       </Link>
+
       {totalPages.map((el, index) => {
         let page = index + 1
         let isActive = page === currentPage
@@ -67,7 +68,7 @@ export const PostPagination = props => {
           }
         }
       `}
-      render={data => <PostPaginationTemplate data={data} {...props} />}
+      render={data => <PostPaginationComponent data={data} {...props} />}
     />
   )
 }

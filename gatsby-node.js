@@ -55,8 +55,9 @@ exports.createPages = ({ graphql, actions }) => {
         context: {
           slug: node.fields.slug,
           // Find author image and pass it to the single post to display in the Sidebar
-          authorImageUrl: authors.find(a => a.name === node.frontmatter.author)
-            .imageUrl,
+          authorImageUrl:
+            "authors/" +
+            authors.find(a => a.name === node.frontmatter.author).imageUrl,
         },
       })
     })
@@ -102,7 +103,7 @@ exports.createPages = ({ graphql, actions }) => {
       const currentPage = index + 1
 
       if (isFirstPage) return
-        
+
       createPage({
         path: `/page/${currentPage}`,
         component: templates.postList,

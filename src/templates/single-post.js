@@ -1,19 +1,8 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
-import {
-  Row,
-  Col,
-  Card,
-  CardSubtitle,
-  CardBody,
-  CardText,
-} from "reactstrap"
-import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaTwitter,
-} from "react-icons/fa"
+import { Row, Col, Card, CardSubtitle, CardBody, CardText } from "reactstrap"
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa"
 import { DiscussionEmbed } from "disqus-react"
 
 import Layout from "../components/layout"
