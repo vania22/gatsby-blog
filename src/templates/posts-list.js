@@ -7,51 +7,52 @@ import SEO from "../components/seo"
 import Post from "../components/Post"
 import Sidebar from "../components/Sidebar"
 
-const postLists = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Recent Posts</h1>
-    <Row>
-      <Col md="8">
-        <StaticQuery
-          query={indexQuery}
-          render={data => {
-            return (
-              <>
-                {data.allMarkdownRemark.edges.map(({ node }) => (
-                  <Post
-                    title={node.frontmatter.title}
-                    author={node.frontmatter.author}
-                    slug={node.fields.slug}
-                    date={node.frontmatter.date}
-                    fluid={node.frontmatter.image.childImageSharp.fluid}
-                    tags={node.frontmatter.tags}
-                    body={node.excerpt}
-                    key={node.id}
-                  />
-                ))}
-              </>
-            )
-          }}
-        />
-      </Col>
-      <Col md="4">
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <Sidebar />
-        </div>
-      </Col>
-    </Row>
-  </Layout>
-)
+const postLists = props => {
+  const posts = props.data.allMarkdownRemark.edges
+  const { currentPage } = props.pageContext
+  console.log(props.pageContext)
 
-const postListQuery = graphql`
-  query {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>Page: {currentPage}</h1>
+      <Row>
+        <Col md="8">
+          {posts.map(({ node }) => (
+            <Post
+              title={node.frontmatter.title}
+              author={node.frontmatter.author}
+              slug={node.fields.slug}
+              date={node.frontmatter.date}
+              fluid={node.frontmatter.image.childImageSharp.fluid}
+              tags={node.frontmatter.tags}
+              body={node.excerpt}
+              key={node.id}
+            />
+          ))}
+        </Col>
+        <Col md="4">
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Sidebar />
+          </div>
+        </Col>
+      </Row>
+    </Layout>
+  )
+}
+
+export const postListQuery = graphql`
+  query postListQuery($skip: Int!, $limit: Int!) {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: $limit
+      skip: $skip
+    ) {
       edges {
         node {
           id

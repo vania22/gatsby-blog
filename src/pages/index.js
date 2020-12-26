@@ -1,5 +1,6 @@
 import React from "react"
-import { graphql, StaticQuery } from "gatsby"
+import { graphql, StaticQuery, Link } from "gatsby"
+
 import { Row, Col } from "reactstrap"
 
 import Layout from "../components/layout"
@@ -46,12 +47,54 @@ const IndexPage = () => (
         </div>
       </Col>
     </Row>
+    <Row className="text-center">
+      <Col md="12">
+        <Link
+          to="/"
+          className="mr-1"
+          style={{
+            border: "1px solid rgb(66, 103, 178)",
+            padding: 5,
+            background: "rgb(66, 103, 178)",
+            color: "white",
+            fontWeight: "bold",
+          }}
+        >
+          1
+        </Link>
+        <Link
+          to="/"
+          className="mr-1"
+          style={{
+            border: "1px solid rgb(66, 103, 178)",
+            padding: 5,
+            fontWeight: "bold",
+          }}
+        >
+          2
+        </Link>
+        <Link
+          to="/"
+          className="mr-1"
+          style={{
+            border: "1px solid rgb(66, 103, 178)",
+            padding: 5,
+            fontWeight: "bold",
+          }}
+        >
+          3
+        </Link>
+      </Col>
+    </Row>
   </Layout>
 )
 
 const indexQuery = graphql`
   query {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: 3
+    ) {
       edges {
         node {
           id
