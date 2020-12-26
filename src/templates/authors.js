@@ -10,7 +10,7 @@ exports.authors = [
   {
     name: "Valentyna Vasiuryna",
     imageUrl: "valentyna.jpg",
-    bio: "UI/UX expert, also working as a IT Lawyer",
+    bio: "UI/UX expert, also working as an IT Lawyer",
     facebook: "https://facebook.com",
     twiiter: "https://twitter.com",
     instagram: "https://instagram.com",
