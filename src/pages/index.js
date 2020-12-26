@@ -7,6 +7,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Post from "../components/Post"
 import Sidebar from "../components/Sidebar"
+import PostPagination from "../components/PostPagination"
 
 const IndexPage = () => (
   <Layout>
@@ -49,41 +50,9 @@ const IndexPage = () => (
     </Row>
     <Row className="text-center">
       <Col md="12">
-        <Link
-          to="/"
-          className="mr-1"
-          style={{
-            border: "1px solid rgb(66, 103, 178)",
-            padding: 5,
-            background: "rgb(66, 103, 178)",
-            color: "white",
-            fontWeight: "bold",
-          }}
-        >
-          1
-        </Link>
-        <Link
-          to="/"
-          className="mr-1"
-          style={{
-            border: "1px solid rgb(66, 103, 178)",
-            padding: 5,
-            fontWeight: "bold",
-          }}
-        >
-          2
-        </Link>
-        <Link
-          to="/"
-          className="mr-1"
-          style={{
-            border: "1px solid rgb(66, 103, 178)",
-            padding: 5,
-            fontWeight: "bold",
-          }}
-        >
-          3
-        </Link>
+        <div className="d-flex justify-content-center">
+          <PostPagination currentPage={1}/>
+        </div>
       </Col>
     </Row>
   </Layout>

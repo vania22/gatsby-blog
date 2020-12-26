@@ -6,11 +6,11 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Post from "../components/Post"
 import Sidebar from "../components/Sidebar"
+import PostPagination from "../components/PostPagination"
 
 const postLists = props => {
   const posts = props.data.allMarkdownRemark.edges
   const { currentPage } = props.pageContext
-  console.log(props.pageContext)
 
   return (
     <Layout>
@@ -30,6 +30,9 @@ const postLists = props => {
               key={node.id}
             />
           ))}
+          <div className="d-flex justify-content-center">
+            <PostPagination currentPage={currentPage} />
+          </div>
         </Col>
         <Col md="4">
           <div
@@ -41,6 +44,9 @@ const postLists = props => {
             <Sidebar />
           </div>
         </Col>
+      </Row>
+      <Row className="text-center">
+        <Col md="12"></Col>
       </Row>
     </Layout>
   )
